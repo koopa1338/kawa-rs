@@ -1,5 +1,12 @@
 /*
  * Prototype of a OCH downloader in rust.
+ *
+ */
+
+/*
+ * import dependencies like this. linking is handled by the compiler
+ * 
+ * extern crate curl;
  */
 
 pub struct Account
