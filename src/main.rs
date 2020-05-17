@@ -70,5 +70,5 @@ fn main()
     let url: &str = "url";
 
     let acc = Account {username, password, premium: false};
-    download(&url, &path, &acc)
+    download(&url, &path, &acc);
 }
