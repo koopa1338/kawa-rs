@@ -8,3 +8,6 @@ edition = "2018"
 
 [dependencies]
 curl = "0.4.29"
+
+[profile.release]
+lto = true
