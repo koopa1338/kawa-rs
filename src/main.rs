@@ -3,42 +3,25 @@
  *
  */
 
+mod account;
+
 //use std::fs::File;
 //use std::io::prelude::*;
 use std::path::Path;
+use account::Account;
 
-pub struct Account<'a>
-{
-    username: &'a str,
-    password: &'a str,
-    premium: bool,
 }
 
-pub fn authenticate(username: &str, password: &str)
-{
-    // TODO: implement some kind of API controller to support multiple hoster
-    // functions for authentication and premium status
-    let auth_url = &format!("https://uploaded.net/io/login?id={}&pw={}", username, password);
-    
-    /*TODO: authenticate user and save as a session
-     *
-     * params username, password (maybe token?)
-     */
-    let mut easy = curl::easy::Easy::new();
-    easy.url(auth_url).unwrap();
-    easy.post(true).unwrap();
 }
 
 pub fn download(_url: &str, _path: &Path, account: &Account)
 {
-    if !account.username.is_empty() && !account.password.is_empty() || !account.premium
-    {
-        authenticate(&account.username, &account.password);
-    }
-    else
-    {
+    if account.premium {
+        let _session = account.authenticate();
+    } else {
         println!("No authentication, loading in free mode...");
     }
+
     // TODO: download file from url
 
     // FIXME: download data to buffer data
@@ -69,6 +52,7 @@ fn main()
     let path = Path::new("./file");
     let url: &str = "url";
 
-    let acc = Account {username, password, premium: false};
+    let acc = Account::new(username, password);
     download(&url, &path, &acc);
+    println!("DONE");
 }
