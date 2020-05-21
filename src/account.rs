@@ -25,7 +25,6 @@ impl Account<'_> {
 
     pub fn authenticate(&self) -> &str
     {
-
         // TODO: implement some kind of API controller to support multiple hoster
         // functions for authentication and premium status
         let auth_url = &format!("https://uploaded.net/io/login?id={}&pw={}", self.username, self.password);
@@ -40,5 +39,3 @@ impl Account<'_> {
         return "SESSION"
     }
 }
-
-

@@ -10,8 +10,14 @@ mod account;
 use std::path::Path;
 use account::Account;
 
+
+pub struct DownloadList<'a> {
+    _entries: Vec<DownloadEntries<'a>>
 }
 
+pub struct DownloadEntries<'a> {
+    _url: &'a str,
+    _filename: &'a str
 }
 
 pub fn download(_url: &str, _path: &Path, account: &Account)
