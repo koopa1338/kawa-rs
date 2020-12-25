@@ -7,21 +7,19 @@ mod account;
 
 //use std::fs::File;
 //use std::io::prelude::*;
-use std::path::Path;
 use account::Account;
-
+use std::path::Path;
 
 pub struct DownloadList<'a> {
-    _entries: Vec<DownloadEntries<'a>>
+    _entries: Vec<DownloadEntries<'a>>,
 }
 
 pub struct DownloadEntries<'a> {
     _url: &'a str,
-    _filename: &'a str
+    _filename: &'a str,
 }
 
-pub fn download(_url: &str, _path: &Path, account: &Account)
-{
+pub fn download(_url: &str, _path: &Path, account: &Account) {
     if account.premium {
         let _session = account.authenticate();
     } else {
@@ -48,8 +46,8 @@ pub fn download(_url: &str, _path: &Path, account: &Account)
      */
 }
 
-fn main()
-{
+#[tokio::main]
+async fn main() -> Result<(), Box<dyn std::error::Error>> {
     // TODO: Read username, password and download path from a config file
     let username: &str = "username";
     let password: &str = "password";
@@ -59,6 +57,8 @@ fn main()
     let url: &str = "url";
 
     let acc = Account::new(username, password);
+    acc.authenticate().await?;
     download(&url, &path, &acc);
-    println!("DONE");
+    //println!("DONE");
+    Ok(())
 }

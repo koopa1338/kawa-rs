@@ -1,41 +1,53 @@
-pub struct Account<'a>
-{
+extern crate reqwest;
+
+pub struct Account<'a> {
     username: &'a str,
     password: &'a str,
     pub premium: bool,
 }
 
 impl Account<'_> {
-    pub fn new<'a>(username: &'a str, password: &'a str) -> Account<'a>
-    {
+    pub fn new<'a>(username: &'a str, password: &'a str) -> Account<'a> {
         let mut acc = Account {
             username,
             password,
-            premium: false
+            premium: false,
         };
         acc.get_premium_status();
         acc
     }
 
-    pub fn get_premium_status(&mut self)
-    {
+    pub fn get_premium_status(&mut self) {
         let prem = false;
         self.premium = prem;
     }
 
-    pub fn authenticate(&self) -> &str
-    {
-        // TODO: implement some kind of API controller to support multiple hoster
-        // functions for authentication and premium status
-        let auth_url = &format!("https://uploaded.net/io/login?id={}&pw={}", self.username, self.password);
+    pub async fn authenticate(&self) -> reqwest::Result<reqwest::Response> {
+        // TODO: make a post request to login and save the session cookie
 
-        /*TODO: authenticate user and save as a session
-         *
-         * params username, password (maybe token?)
+        /* Host: ddownload.com
+         * Params login=<username>&password=<HTMLEncodedPassword>
          */
-        let mut easy = curl::easy::Easy::new();
-        easy.url(auth_url).unwrap();
-        easy.post(true).unwrap();
-        return "SESSION"
+        let mut params = std::collections::HashMap::new();
+        params.insert("login", self.username);
+        params.insert("password", self.password);
+        let client = reqwest::Client::builder()
+            .cookie_store(true)
+            .build()
+            .unwrap();
+        let resp = client
+            .post("https://ddownload.com/login.html")
+            .form(&params)
+            .send()
+            .await?;
+        println!("{:#?}", resp);
+        for cookie in resp.cookies() {
+            println!(
+                "COOKIE JAR: name = {}, value = {}",
+                cookie.name(),
+                cookie.value()
+            );
+        }
+        Ok(resp)
     }
 }
