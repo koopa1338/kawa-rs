@@ -18,3 +18,6 @@ is implemented. I haven't decided which framework to use for the gui yet but
 main points should be cross plattform (as at least linux and windows should be
 supported) and easy to use components with rust.
 
+## License
+
+[MIT License](./LICENSE.md)
