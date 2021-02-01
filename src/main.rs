@@ -1,12 +1,10 @@
-use std::sync::Arc;
-use druid::widget::{Container, CrossAxisAlignment, Flex, Label, List, Scroll};
-use druid::{
-    AppLauncher, Color, Data, Lens, UnitPoint, Widget, WidgetExt, WindowDesc,
-};
+use druid::widget::{ Container, CrossAxisAlignment, Flex, Label, List, Scroll };
+use druid::{ AppLauncher, Color, Data, Lens, UnitPoint, Widget, WidgetExt, WindowDesc };
+use druid::im::{ Vector, vector };
 
 #[derive(Clone, Data, Lens)]
 struct AppData {
-    list: Arc<Vec<u32>>,
+    list: Vector<u32>,
     idx: usize,
 }
 
@@ -14,7 +12,7 @@ struct AppData {
 pub fn main() {
     let main_window = WindowDesc::new(ui_builder);
     // Set our initial data
-    let list = Arc::new(vec![1, 2, 3, 4, 5]);
+    let list = vector![1, 2, 3, 4, 5];
     let data = AppData {
         idx: list.len(),
         list,
