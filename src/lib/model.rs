@@ -1,33 +1,6 @@
-// use reqwest::{Response, Result};
 use druid::Data;
 use std::path::{Path, PathBuf};
 use std::sync::Arc;
-
-/* we dont care about accounts and authentication at this point.
-pub struct Account<'a> {
-    username: &'a str,
-    password: &'a str,
-    premium: bool,
-}
-
-impl Account<'_> {
-    pub fn new<'a>(username: &'a str, password: &'a str) -> Account<'a> {
-        Account {
-            username,
-            password,
-            premium: false,
-        }
-    }
-
-    pub fn get_premium_status(&mut self) {
-        unimplemented!();
-    }
-
-    pub async fn authenticate(&self) -> Result<Response> {
-        unimplemented!();
-    }
-}
-*/
 
 #[allow(dead_code)]
 #[derive(Clone, Data, PartialEq)]
@@ -37,6 +10,14 @@ enum State {
     Finished,
     Extracted,
 }
+
+#[derive(Clone, Data)]
+pub struct Account {
+    username: String,
+    password: String,
+    premium: bool,
+}
+
 
 #[derive(Clone, Data)]
 pub struct Part {
@@ -61,6 +42,7 @@ pub struct Package {
 #[derive(Clone, Data)]
 pub struct AppData {
     data: Arc<Vec<Package>>,
+    accounts: Arc<Vec<Account>>,
 }
 
 impl AppData {
@@ -82,8 +64,25 @@ impl AppData {
             size: 0.0,
             state: State::Added,
         };
+
+        let acc = Account {
+            username: String::from("test"),
+            password: String::from("password"),
+            premium: false,
+        };
+
         AppData {
             data: Arc::new(vec![package]),
+            accounts: Arc::new(vec![acc]),
         }
     }
+
+    /* 
+    pub fn new(packages: Vec<Package>, accounts: Vec<Account>) -> Self {
+        Self {
+            data: Arc::new(packages),
+            accounts: Arc::new(accounts),
+        }
+    }
+    */
 }
