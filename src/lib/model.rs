@@ -18,7 +18,6 @@ pub struct Account {
     premium: bool,
 }
 
-
 #[derive(Clone, Data)]
 pub struct Part {
     name: String,
@@ -77,7 +76,7 @@ impl AppData {
         }
     }
 
-    /* 
+    /*
     pub fn new(packages: Vec<Package>, accounts: Vec<Account>) -> Self {
         Self {
             data: Arc::new(packages),

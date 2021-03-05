@@ -5,9 +5,10 @@ authors = ["koopa1338 <sinner1991@gmail.com>"]
 edition = "2018"
 
 [dependencies]
-reqwest = { version = "0.10.4", features = ["cookies"] }
-tokio = { version = "0.2", features = ["full"] }
 druid = { version = "0.7.0", features = ["im"] }
+reqwest = { version = "0.10.4", features = ["cookies"] }
+thiserror = "1.0.24"
+tokio = { version = "0.2", features = ["full"] }
 
 [profile.release]
 lto = true
