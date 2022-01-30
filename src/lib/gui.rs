@@ -1,28 +1,49 @@
 use super::model::AppData;
-use druid::widget::{Container, Flex, Widget};
-use druid::Color;
+use eframe::{egui, epi};
+use rfd::FileDialog;
 
-pub fn ui_builder() -> impl Widget<AppData> {
-    let root = Flex::column();
+impl epi::App for AppData {
+    fn update(&mut self, ctx: &eframe::egui::CtxRef, frame: &epi::Frame) {
+        egui::TopBottomPanel::top("Menu").show(ctx, |ui| {
+            egui::menu::bar(ui, |ui| {
+                ui.menu_button("File", |ui| {
+                    if ui.button("Open").clicked() {
+                        let _files = FileDialog::new()
+                            .add_filter("text", &["txt", "rs"])
+                            .pick_file();
+                    }
+                });
+                if ui.button("Quit").clicked() {
+                    frame.quit();
+                }
+            });
+        });
 
-    /*
-    let list = Flex::row().cross_axis_alignment(CrossAxisAlignment::Start);
-    list.add_flex_child(
-        Scroll::new(List::new(|| {
-            Label::new(|item: &u32, _env: &_| format!("ITEM {}", item))
-                .align_vertical(UnitPoint::LEFT)
-                .padding(10.0)
-                .expand()
-                .height(50.0)
-                .background(Color::rgb(0.5, 0.5, 0.5))
-        }))
-        .vertical()
-        .lens(AppData::list),
-        1.0,
-    );
+        egui::CentralPanel::default().show(ctx, |ui| {
+            ui.heading("Download Manager");
+        });
 
-    root.add_child(list);
-    */
-    let container = Container::new(root);
-    container.border(Color::from_hex_str("#cccccc").unwrap(), 10.0)
+        egui::TopBottomPanel::bottom("footer").show(ctx, |ui| {
+            egui::warn_if_debug_build(ui);
+        });
+    }
+
+    fn name(&self) -> &str {
+        "Kawa Download Manager"
+    }
+
+    fn save(&mut self, storage: &mut dyn epi::Storage) {
+        epi::set_value(storage, epi::APP_KEY, self);
+    }
+
+    fn setup(
+        &mut self,
+        _ctx: &egui::CtxRef,
+        _frame: &epi::Frame,
+        _storage: Option<&dyn epi::Storage>,
+    ) {
+        if let Some(storage) = _storage {
+            *self = epi::get_value(storage, epi::APP_KEY).unwrap_or_default()
+        }
+    }
 }
