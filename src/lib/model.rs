@@ -52,3 +52,9 @@ impl Default for AppData {
         }
     }
 }
+
+impl Package {
+    fn render(&self) {
+        todo!()
+    }
+}

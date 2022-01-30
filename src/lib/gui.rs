@@ -20,11 +20,32 @@ impl epi::App for AppData {
         });
 
         egui::CentralPanel::default().show(ctx, |ui| {
-            ui.heading("Download Manager");
+            egui::ScrollArea::vertical()
+                .auto_shrink([false; 2])
+                .show(ui, |ui| {
+                    egui::Grid::new("some_unique_id")
+                        .striped(true)
+                        .num_columns(2)
+                        .spacing(egui::vec2(5.0, 10.0))
+                        .show(ui, |ui| {
+                            ui.label("Name");
+                            ui.label("progress");
+                            ui.end_row();
+
+                            for i in 0..200 {
+                                ui.label(format!("Item {}", i));
+                                ui.label(format!("progress {}", 0));
+                                ui.end_row();
+                            }
+                        });
+                });
         });
 
         egui::TopBottomPanel::bottom("footer").show(ctx, |ui| {
-            egui::warn_if_debug_build(ui);
+            let layout = egui::Layout::top_down(egui::Align::Center).with_main_justify(true);
+            ui.allocate_ui_with_layout(ui.available_size(), layout, |ui| {
+                egui::warn_if_debug_build(ui);
+            })
         });
     }
 
