@@ -12,10 +12,10 @@ impl epi::App for AppData {
                             .add_filter("text", &["txt", "rs"])
                             .pick_file();
                     }
+                    if ui.button("Quit").clicked() {
+                        frame.quit();
+                    }
                 });
-                if ui.button("Quit").clicked() {
-                    frame.quit();
-                }
             });
         });
 
