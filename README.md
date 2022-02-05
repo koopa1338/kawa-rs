@@ -18,14 +18,15 @@ support them can be realised.
 ### GUI
 There will be no usable gui till the core functionality is implemented.
 
-I've decided to use [druid](https://github.com/linebender/druid) as the gui
-framework for this application as it seems to be very easy to use and provides
-a modern architecture. I haven't tested this on other platforms so this needs
-some more investigation at a later point.
+I've evaluated different gui libraries like druid, ice and gtk but they have
+all different problems I don't want to deal with in my application. The easiest
+way to get a good looking and cross plattform gui seems to be with egui. There
+are also some features that are currently in development or I have to implement
+myself (like a decent [table widget](https://github.com/emilk/egui/issues/296)).
 
-At the moment I build a basic data- and projectstructure but there are no
-elements that will be rendered. My main focus in next iterations is to persist
-data, add urls as packages/parts and download the files to disk.
+### TODO
+egui comes with a persistence feature so I don't have to deal with implementing
+this myself. At the moment I build a basic UI as a prototype to test usability.
 
 ## License
 
