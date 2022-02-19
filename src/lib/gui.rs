@@ -1,21 +1,16 @@
 use super::model::AppData;
 use eframe::{egui, epi};
-use rfd::FileDialog;
 
 impl epi::App for AppData {
-    fn update(&mut self, ctx: &eframe::egui::CtxRef, frame: &epi::Frame) {
+    fn update(&mut self, ctx: &eframe::egui::CtxRef, _frame: &epi::Frame) {
         egui::TopBottomPanel::top("Menu").show(ctx, |ui| {
-            egui::menu::bar(ui, |ui| {
-                ui.menu_button("File", |ui| {
-                    if ui.button("Open").clicked() {
-                        let _files = FileDialog::new()
-                            .add_filter("text", &["txt", "rs"])
-                            .pick_file();
-                    }
-                    if ui.button("Quit").clicked() {
-                        frame.quit();
-                    }
-                });
+            ui.horizontal_wrapped(|ui| {
+                egui::widgets::global_dark_light_mode_switch(ui);
+
+                if ui.add(egui::Button::new("Start")).clicked() {
+                    println!("START");
+                }
+                ui.separator();
             });
         });
 
@@ -26,15 +21,15 @@ impl epi::App for AppData {
                     egui::Grid::new("some_unique_id")
                         .striped(true)
                         .num_columns(2)
-                        .spacing(egui::vec2(5.0, 10.0))
+                        .spacing((10.0, 20.0))
                         .show(ui, |ui| {
-                            ui.label("Name");
-                            ui.label("progress");
+                            ui.heading("Name");
+                            ui.heading("progress");
                             ui.end_row();
 
-                            for i in 0..200 {
+                            for i in 1..100 {
                                 ui.label(format!("Item {}", i));
-                                ui.label(format!("progress {}", 0));
+                                ui.add(egui::widgets::ProgressBar::new(0.8).show_percentage());
                                 ui.end_row();
                             }
                         });
