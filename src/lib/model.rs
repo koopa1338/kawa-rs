@@ -53,6 +53,7 @@ impl Default for AppData {
     }
 }
 
+#[allow(dead_code)]
 impl Package {
     fn render(&self) {
         todo!()
