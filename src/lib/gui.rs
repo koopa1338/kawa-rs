@@ -96,8 +96,25 @@ impl AppData {
                             ui.end_row();
 
                             for i in 1..100 {
-                                ui.label(format!("Item {}", i));
-                                ui.add(widgets::ProgressBar::new(0.8).show_percentage());
+                                ui.collapsing(format!("Item {i}"), |ui| {
+                                    ui.horizontal(|ui| {
+                                        ui.label(format!("sub package {i}.1"));
+                                        ui.add(
+                                            widgets::ProgressBar::new(0.8)
+                                                .show_percentage(),
+                                        );
+                                    });
+
+                                    ui.end_row();
+
+                                    ui.horizontal(|ui| {
+                                        ui.label(format!("sub package {i}.2"));
+                                        ui.add(
+                                            widgets::ProgressBar::new(0.8)
+                                                .show_percentage(),
+                                        );
+                                    });
+                                });
                                 ui.end_row();
                             }
                         });
