@@ -4,58 +4,51 @@ use std::sync::Arc;
 use serde::{Deserialize, Serialize};
 
 #[allow(dead_code)]
-#[derive(Clone, PartialEq, Serialize, Deserialize)]
-enum State {
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all(deserialize = "lowercase"))]
+pub enum State {
     Added,
     Started,
     Finished,
     Extracted,
 }
 
-#[derive(Clone, Serialize, Deserialize)]
+#[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct Account {
-    username: String,
-    password: String,
-    premium: bool,
+    pub username: String,
+    pub password: String,
+    pub premium: bool,
 }
 
-#[derive(Clone, Serialize, Deserialize)]
+#[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct Part {
-    name: String,
-    path: Arc<PathBuf>,
-    url: String,
-    progress: f64,
-    size: f64,
-    state: State,
+    pub name: String,
+    pub url: String,
+    pub progress: f32,
+    pub size: u64,
 }
 
-#[derive(Clone, Serialize, Deserialize)]
+#[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct Package {
-    name: String,
-    parts: Arc<Vec<Part>>,
-    progress: f64,
-    size: f64,
-    state: State,
+    pub name: String,
+    pub parts: Arc<Vec<Part>>,
+    pub path: Arc<PathBuf>,
+    pub progress: f32,
+    pub size: u64,
+    pub state: State,
 }
 
-#[derive(Clone, Serialize, Deserialize)]
+#[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct AppData {
-    data: Arc<Vec<Package>>,
-    accounts: Arc<Vec<Account>>,
+    pub packages: Arc<Vec<Package>>,
+    pub accounts: Arc<Vec<Account>>,
 }
 
 impl Default for AppData {
     fn default() -> Self {
         AppData {
-            data: Arc::new(Vec::new()),
+            packages: Arc::new(Vec::new()),
             accounts: Arc::new(Vec::new()),
         }
-    }
-}
-
-#[allow(dead_code)]
-impl Package {
-    fn render(&self) {
-        todo!()
     }
 }

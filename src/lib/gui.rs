@@ -1,10 +1,13 @@
-use super::model::AppData;
+
+use super::model::{AppData, Package, Part};
 use eframe::{
-    egui::{self, widgets, Align, Button, CentralPanel, Grid, Layout, ScrollArea, TopBottomPanel},
-    epi,
+    egui::{
+        self, widgets, Align, Button, CentralPanel, Grid, Layout, ScrollArea, TopBottomPanel, Ui,
+    },
+    epi::{self, App},
 };
 
-impl epi::App for AppData {
+impl App for AppData {
     fn update(&mut self, ctx: &eframe::egui::CtxRef, _frame: &epi::Frame) {
         self.ui_icon_bar(ctx);
         self.ui_download_grid(ctx);
@@ -21,24 +24,26 @@ impl epi::App for AppData {
         "Kawa Download Manager"
     }
 
-    fn save(&mut self, storage: &mut dyn epi::Storage) {
-        epi::set_value(storage, epi::APP_KEY, self);
-    }
+    // NOTE: commented for usage of dummy data
+    //
+    // fn save(&mut self, storage: &mut dyn epi::Storage) {
+    //     epi::set_value(storage, epi::APP_KEY, self);
+    // }
 
-    fn setup(
-        &mut self,
-        _ctx: &egui::CtxRef,
-        _frame: &epi::Frame,
-        _storage: Option<&dyn epi::Storage>,
-    ) {
-        if let Some(storage) = _storage {
-            *self = epi::get_value(storage, epi::APP_KEY).unwrap_or_default()
-        }
-    }
+    // fn setup(
+    //     &mut self,
+    //     _ctx: &egui::CtxRef,
+    //     _frame: &epi::Frame,
+    //     _storage: Option<&dyn epi::Storage>,
+    // ) {
+    //     if let Some(storage) = _storage {
+    //         *self = epi::get_value(storage, epi::APP_KEY).unwrap_or_default()
+    //     }
+    // }
 }
 
 impl AppData {
-    fn ui_icon_bar(&self, ctx: &eframe::egui::CtxRef) {
+    fn ui_icon_bar(&mut self, ctx: &eframe::egui::CtxRef) {
         TopBottomPanel::top("Menu").show(ctx, |ui| {
             ui.vertical_centered(|ui| {
                 ui.add_space(5.0);
@@ -95,30 +100,31 @@ impl AppData {
                             ui.heading("progress");
                             ui.end_row();
 
-                            for i in 1..100 {
-                                ui.collapsing(format!("Item {i}"), |ui| {
-                                    ui.horizontal(|ui| {
-                                        ui.label(format!("sub package {i}.1"));
-                                        ui.add(
-                                            widgets::ProgressBar::new(0.8)
-                                                .show_percentage(),
-                                        );
-                                    });
-
-                                    ui.end_row();
-
-                                    ui.horizontal(|ui| {
-                                        ui.label(format!("sub package {i}.2"));
-                                        ui.add(
-                                            widgets::ProgressBar::new(0.8)
-                                                .show_percentage(),
-                                        );
-                                    });
-                                });
+                            for package in self.packages.iter() {
+                                package.render(ui);
                                 ui.end_row();
                             }
                         });
                 });
+        });
+    }
+}
+
+impl Part {
+    fn render(&self, ui: &mut Ui) {
+        ui.horizontal(|ui| {
+            ui.label(&self.name);
+            ui.add(widgets::ProgressBar::new(self.progress).show_percentage());
+        });
+    }
+}
+
+impl Package {
+    fn render(&self, ui: &mut Ui) {
+        ui.collapsing(&self.name, |ui| {
+            for part in self.parts.iter() {
+                part.render(ui);
+            }
         });
     }
 }

@@ -1,0 +1,152 @@
+{
+  "packages": [
+    {
+      "name": "package 1",
+      "path": "/tmp/package 1",
+      "parts": [
+                {
+                "name": "part 1",
+                "url": "https://google.de",
+                  "progress": 0.0,
+                  "size": 500000
+                },
+                {
+                "name": "part 2",
+                "url": "https://google.de",
+                  "progress": 0.0,
+                  "size": 500000
+                }
+            ],
+      "progress": 0.0,
+      "size": 1000000,
+      "state": "added"
+    },
+    {
+      "name": "package 2",
+      "path": "/tmp/package 2",
+      "parts": [
+                {
+                "name": "part 1",
+                "url": "https://google.de",
+                  "progress": 0.0,
+                  "size": 500000
+                },
+                {
+                "name": "part 2",
+                "url": "https://google.de",
+                  "progress": 0.0,
+                  "size": 500000
+                }
+            ],
+      "progress": 0.0,
+      "state": "added",
+      "size": 1000000
+    },
+    {
+      "name": "package 3",
+      "path": "/tmp/package 3",
+      "parts": [
+                {
+                "name": "part 1",
+                "url": "https://google.de",
+                  "progress": 1.0,
+                  "size": 500000
+                },
+                {
+                "name": "part 2",
+                "url": "https://google.de",
+                  "progress": 1.0,
+                  "size": 500000
+                }
+            ],
+      "progress": 1.0,
+      "size": 1000000,
+      "state": "extracted"
+    },
+    {
+      "name": "package 4",
+      "path": "/tmp/package 4",
+      "parts": [
+                {
+                "name": "part 1",
+                "url": "https://google.de",
+                  "progress": 0.0,
+                  "size": 500000
+                },
+                {
+                "name": "part 2",
+                "url": "https://google.de",
+                  "progress": 0.0,
+                  "size": 500000
+                }
+            ],
+      "progress": 0.0,
+      "size": 1000000,
+      "state": "added"
+    },
+    {
+      "name": "package 5",
+      "path": "/tmp/package 5",
+        "parts": [
+                {
+                "name": "part 1",
+                "url": "https://google.de",
+                  "progress": 0.0,
+                  "size": 500000
+                },
+                {
+                "name": "part 2",
+                "url": "https://google.de",
+                  "progress": 0.0,
+                  "size": 500000
+                }
+            ],
+      "progress": 1.0,
+      "size": 1000000,
+      "state": "finished"
+    },
+    {
+      "name": "package 6",
+      "path": "/tmp/package 6",
+        "parts": [
+                {
+                "name": "part 1",
+                "url": "https://google.de",
+                  "progress": 0.0,
+                  "size": 500000
+                },
+                {
+                "name": "part 2",
+                "url": "https://google.de",
+                  "progress": 0.0,
+                  "size": 500000
+                }
+            ],
+      "progress": 0.8,
+      "size": 1000000,
+      "state": "started"
+    },
+    {
+      "name": "package 7",
+      "path": "/tmp/package 7",
+        "parts": [
+                {
+                "name": "part 1",
+                "url": "https://google.de",
+                  "progress": 0.0,
+                  "size": 500000
+                },
+                {
+                "name": "part 2",
+                "url": "https://google.de",
+                  "progress": 0.0,
+                  "size": 500000
+                }
+            ],
+      "progress": 0.33,
+      "size": 1000000,
+      "state": "started"
+    }
+  ],
+  "accounts": []
+}
