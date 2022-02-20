@@ -1,4 +1,3 @@
-
 use super::model::{AppData, Package, Part};
 use eframe::{
     egui::{
@@ -97,7 +96,10 @@ impl AppData {
                         .spacing((10.0, 20.0))
                         .show(ui, |ui| {
                             ui.heading("Name");
-                            ui.heading("progress");
+                            ui.horizontal(|ui| {
+                                ui.expand_to_include_rect(ui.available_rect_before_wrap());
+                                ui.heading("progress");
+                            });
                             ui.end_row();
 
                             for package in self.packages.iter() {
