@@ -1,13 +1,14 @@
 use super::model::{AppData, Package, Part};
 use eframe::{
     egui::{
-        self, widgets, Align, Button, CentralPanel, Grid, Layout, ScrollArea, TopBottomPanel, Ui,
+        self, widgets, Align, Button, CentralPanel, Context, Grid, Layout, ScrollArea,
+        TopBottomPanel, Ui,
     },
     epi::{self, App},
 };
 
 impl App for AppData {
-    fn update(&mut self, ctx: &eframe::egui::CtxRef, _frame: &epi::Frame) {
+    fn update(&mut self, ctx: &Context, _frame: &epi::Frame) {
         self.ui_icon_bar(ctx);
         self.ui_download_grid(ctx);
 
@@ -42,7 +43,7 @@ impl App for AppData {
 }
 
 impl AppData {
-    fn ui_icon_bar(&mut self, ctx: &eframe::egui::CtxRef) {
+    fn ui_icon_bar(&mut self, ctx: &Context) {
         TopBottomPanel::top("Menu").show(ctx, |ui| {
             ui.vertical_centered(|ui| {
                 ui.add_space(5.0);
@@ -85,7 +86,7 @@ impl AppData {
         });
     }
 
-    fn ui_download_grid(&self, ctx: &eframe::egui::CtxRef) {
+    fn ui_download_grid(&self, ctx: &Context) {
         CentralPanel::default().show(ctx, |ui| {
             ScrollArea::vertical()
                 .auto_shrink([false; 2])
