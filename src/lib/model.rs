@@ -39,9 +39,23 @@ pub struct Package {
 }
 
 #[derive(Clone, Debug, Serialize, Deserialize)]
+pub struct AppSettings {
+    pub url_window_open: bool,
+}
+
+impl Default for AppSettings {
+    fn default() -> Self {
+        AppSettings {
+            url_window_open: false,
+        }
+    }
+}
+
+#[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct AppData {
     pub packages: Arc<Vec<Package>>,
     pub accounts: Arc<Vec<Account>>,
+    pub settings: AppSettings,
 }
 
 impl Default for AppData {
@@ -49,6 +63,7 @@ impl Default for AppData {
         AppData {
             packages: Arc::new(Vec::new()),
             accounts: Arc::new(Vec::new()),
+            ..Default::default()
         }
     }
 }

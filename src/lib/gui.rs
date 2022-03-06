@@ -1,8 +1,8 @@
 use super::model::{AppData, Package, Part};
 use eframe::{
     egui::{
-        self, widgets, Align, Button, CentralPanel, Context, Grid, Layout, ScrollArea,
-        TopBottomPanel, Ui,
+        self, widgets, Align, Button, CentralPanel, CollapsingResponse, Context, Grid, Layout,
+        ScrollArea, TopBottomPanel, Ui, Window,
     },
     epi::{self, App},
 };
@@ -18,6 +18,13 @@ impl App for AppData {
                 egui::warn_if_debug_build(ui);
             })
         });
+        Window::new("Paste URLs")
+            .open(&mut self.settings.url_window_open)
+            .resizable(true)
+            .collapsible(false)
+            .show(ctx, |ui| {
+                ui.label("test");
+            });
     }
 
     fn name(&self) -> &str {
@@ -80,6 +87,14 @@ impl AppData {
                     }
 
                     ui.separator();
+
+                    if ui
+                        .add(Button::new("URLs"))
+                        .on_hover_text("Add urls")
+                        .clicked()
+                    {
+                        self.settings.url_window_open = !self.settings.url_window_open;
+                    }
                 });
                 ui.add_space(5.0);
             });
@@ -93,18 +108,33 @@ impl AppData {
                 .show(ui, |ui| {
                     Grid::new("some_unique_id")
                         .striped(true)
-                        .num_columns(2)
                         .spacing((10.0, 20.0))
+                        .num_columns(2)
                         .show(ui, |ui| {
                             ui.heading("Name");
                             ui.horizontal(|ui| {
                                 ui.expand_to_include_rect(ui.available_rect_before_wrap());
-                                ui.heading("progress");
+                                ui.heading("Progress");
                             });
                             ui.end_row();
 
                             for package in self.packages.iter() {
-                                package.render(ui);
+                                let res = package.render(ui);
+
+                                ui.vertical(|ui| {
+                                    ui.add(
+                                        widgets::ProgressBar::new(package.progress)
+                                            .show_percentage(),
+                                    );
+                                    if res.body_response.is_some() {
+                                        for part in package.parts.iter() {
+                                            ui.add(
+                                                widgets::ProgressBar::new(part.progress)
+                                                    .show_percentage(),
+                                            );
+                                        }
+                                    }
+                                });
                                 ui.end_row();
                             }
                         });
@@ -115,19 +145,21 @@ impl AppData {
 
 impl Part {
     fn render(&self, ui: &mut Ui) {
-        ui.horizontal(|ui| {
-            ui.label(&self.name);
-            ui.add(widgets::ProgressBar::new(self.progress).show_percentage());
+        ui.horizontal_wrapped(|ui| {
+            ui.horizontal(|ui| {
+                ui.expand_to_include_rect(ui.available_rect_before_wrap());
+                ui.label(&self.name);
+            });
         });
     }
 }
 
 impl Package {
-    fn render(&self, ui: &mut Ui) {
+    fn render(&self, ui: &mut Ui) -> CollapsingResponse<()> {
         ui.collapsing(&self.name, |ui| {
             for part in self.parts.iter() {
                 part.render(ui);
             }
-        });
+        })
     }
 }
