@@ -1,10 +1,17 @@
 mod lib;
 
-use lib::model::AppData;
-use std::fs::read_to_string;
+use lib::models::app::AppState;
+
+#[macro_use]
+extern crate lazy_static_include;
+
+// for testing purposes only
+lazy_static_include_str! {
+    STATE => "demo.json",
+}
 
 pub fn main() {
-    let app: AppData = serde_json::from_str(&read_to_string("./demo.json").unwrap()).unwrap();
+    let app: AppState = serde_json::from_str(&STATE).unwrap();
     let native_options = eframe::NativeOptions::default();
     eframe::run_native(Box::new(app), native_options);
 }
