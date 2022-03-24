@@ -3,6 +3,7 @@ name = "kawa-rs"
 version = "0.0.1"
 authors = ["koopa1338 <sinner1991@gmail.com>"]
 edition = "2021"
+license-file = "LICENSE.md"
 
 [dependencies]
 eframe = { version = "0.17.0", features = ["persistence"] }
