@@ -3,11 +3,16 @@ name = "kawa-rs"
 version = "0.0.1"
 authors = ["koopa1338 <sinner1991@gmail.com>"]
 edition = "2021"
+license-file = "LICENSE.md"
 
 [dependencies]
-reqwest = { version = "0.11.6", features = ["cookies"] }
-tokio = { version = "1.12.0", features = ["full"] }
-druid = { version = "0.7.0", features = ["im"] }
+eframe = { version = "0.17.0", features = ["persistence"] }
+reqwest = { version = "0.11.9", features = ["cookies"] }
+rfd = "0.8.0"
+serde = { version = "1.0.136", features = ["derive"] }
+serde_json = "1.0.79"
+tokio = { version = "1.17.0", features = ["full"] }
+lazy-static-include = "3.1.1"
 
 [profile.release]
 lto = true

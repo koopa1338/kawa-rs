@@ -1,14 +1,18 @@
 mod lib;
 
-use druid::{AppLauncher, WindowDesc};
-use lib::{gui, model::AppData};
+use lib::models::app::AppState;
 
-pub fn main() {
-    let main_window = WindowDesc::new(gui::ui_builder);
-    // TODO: Set our initial data, handle earlier sessions
-    // Check the best way to persist data
-    let data = AppData::new();
-    AppLauncher::with_window(main_window)
-        .launch(data)
-        .expect("launch failed");
+#[macro_use]
+extern crate lazy_static_include;
+
+// for testing purposes only
+lazy_static_include_str! {
+    STATE => "demo.json",
+}
+
+#[tokio::main]
+async fn main() {
+    let app: AppState = serde_json::from_str(&STATE).unwrap();
+    let native_options = eframe::NativeOptions::default();
+    eframe::run_native(Box::new(app), native_options);
 }
