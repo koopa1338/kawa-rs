@@ -16,7 +16,6 @@ and support for the most common one click hoster, maybe a generic way to
 support them can be realised.
 
 ### GUI
-There will be no usable gui till the core functionality is implemented.
 
 I've evaluated different gui libraries like druid, ice and gtk but they have
 all different problems I don't want to deal with in my application. The easiest
@@ -24,9 +23,10 @@ way to get a good looking and cross plattform gui seems to be with egui. There
 are also some features that are currently in development or I have to implement
 myself (like a decent [table widget](https://github.com/emilk/egui/issues/296)).
 
-### TODO
-egui comes with a persistence feature so I don't have to deal with implementing
-this myself. At the moment I build a basic UI as a prototype to test usability.
+This are some early stage designs I am playing with currently. 
+
+![light](./docs/kawa_light.png)
+![dark](./docs/kawa_dark.png)
 
 ## License
 
