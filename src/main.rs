@@ -10,7 +10,8 @@ lazy_static_include_str! {
     STATE => "demo.json",
 }
 
-pub fn main() {
+#[tokio::main]
+async fn main() {
     let app: AppState = serde_json::from_str(&STATE).unwrap();
     let native_options = eframe::NativeOptions::default();
     eframe::run_native(Box::new(app), native_options);
