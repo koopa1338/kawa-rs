@@ -20,7 +20,13 @@ pub struct AppState {
     pub url_window_open: bool,
 }
 
+
 impl AppState {
+    pub fn set_creation_context(self, _cc: &eframe::CreationContext<'_>) -> Self {
+        // TODO: customize cc
+        self
+    }
+
     pub(crate) fn ui_icon_bar(&mut self, ctx: &Context) {
         TopBottomPanel::top("Menu").show(ctx, |ui| {
             ui.vertical_centered(|ui| {
