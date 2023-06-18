@@ -42,11 +42,11 @@ impl App for AppState {
         eframe::egui::Vec2::INFINITY
     }
 
-    fn clear_color(&self, _visuals: &eframe::egui::Visuals) -> eframe::egui::Rgba {
+    fn clear_color(&self, _visuals: &eframe::egui::Visuals) -> [f32; 4] {
         // NOTE: a bright gray makes the shadows of the windows look weird.
         // We use a bit of transparency so that if the user switches on the
         // `transparent()` option they get immediate results.
-        eframe::egui::Color32::from_rgba_unmultiplied(12, 12, 12, 180).into()
+        eframe::egui::Color32::from_rgba_unmultiplied(12, 12, 12, 180).to_normalized_gamma_f32()
 
         // _visuals.window_fill() would also be a natural choice
     }
